@@ -1,0 +1,35 @@
+# The following code to create a dataframe and remove duplicated rows is always executed and acts as a preamble for your script: 
+
+# dataset = pandas.DataFrame(Subscription_Type, Monthly_Spend_USD)
+# dataset = dataset.drop_duplicates()
+
+# Paste or type your script code here:
+# Import necessary libraries
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+
+# Convert Power BI dataset into a DataFrame
+df = pd.DataFrame(dataset)
+
+# Create the figure and set size
+plt.figure(figsize=(9, 6))
+
+# Define custom colors for better contrast
+palette_colors = {"Prepaid": "#FFAA85", "Postpaid": "#7DA8F7"}
+
+# Create the Boxplot
+sns.boxplot(x=df["Subscription_Type"], y=df["Monthly_Spend_USD"], palette=palette_colors)
+
+# Add labels and title
+plt.xlabel("Subscription Type", fontsize=12, fontweight="bold")
+plt.ylabel("Monthly Spend (USD)", fontsize=12, fontweight="bold")
+plt.title("Box and Whisker Plot of Monthly Spend by Subscription Type", fontsize=14, fontweight="bold")
+
+# Show median values inside the boxes
+medians = df.groupby("Subscription_Type")["Monthly_Spend_USD"].median()
+for i, median in enumerate(medians):
+    plt.text(i, median, f"${median:.2f}", ha='center', va='bottom', fontsize=10, color="black", fontweight="bold")
+
+# Show the plot
+plt.show()
